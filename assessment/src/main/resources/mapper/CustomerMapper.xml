@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.telenorbank.assessment.mapper.CustomerMapper">
+
+    <resultMap id="CustomerResultMap" type="com.telenorbank.assessment.entity.Customer" >
+        <id column="customer_Id" property="customerId" />
+        <result column="customer_Name" property="customerName"  />
+        <result column="customer_Mobile_Number" property="customerMobileNumber"  />
+        <collection property="carsOnRentList" ofType="com.telenorbank.assessment.entity.CarsOnRent">
+            <id column="car_Registration_Number" property="carRegistrationNumber"  />
+            <result column="car_Brand_Name" property="carBrandName"   />
+            <result column="car_Model_Name" property="carModelName"   />
+            <result column="car_Engine_Power_In_CC" property="carEnginePowerInCC"  />
+            <result column="car_Mileage_In_KMs" property="carMileageInKMs"  />
+            <result column="car_Hiring_Status" property="carHiringStatus"   />
+            <result column="customer_Id" property="customerId"   />
+        </collection>
+    </resultMap>
+
+    <select id="getCustomerById" resultMap="CustomerResultMap">
+        select * from customers where customer_Id = #{customerID}
+    </select>
+    <select id="getAllCustomer" resultMap="CustomerResultMap">
+        select * from customers
+    </select>
+
+    <insert id="saveCustomer" useGeneratedKeys="true" keyProperty="customer_Id">
+        insert into customers (customer_Id, customer_Name, customer_Mobile_Number)
+        values(#{customer_Id}, #{customer_Name}, #{customer_Mobile_Number})
+    </insert>
+
+    <delete id="deleteCustomerByCustomerId">
+        delete from customers
+        where customer_Id =#{customerId}
+    </delete>
+
+    <update id="updateCustomer">
+        update customers set customer_Mobile_Number = #{customerMobileNumber}
+        where customer_Id = #{customerId}
+    </update>
+
+</mapper>

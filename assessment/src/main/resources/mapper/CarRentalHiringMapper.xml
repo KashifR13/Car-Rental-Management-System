@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.telenorbank.assessment.mapper.CarRentalHiringMapper">
+
+    <resultMap id="HiringsResultMap"  type="com.telenorbank.assessment.entity.CarRentalHiring" >
+        <id column="car_Rental_Hiring_Id" property="carRentalHiringId"  />
+        <result column="car_Rental_Price_Per_Hour" property="carRentalPricePerHour"   />
+        <result column="car_Hiring_Type" property="carHiringType"   />
+        <result column="car_Registration_Number" property="carRegistrationNumber"  />
+        <result column="customer_Id" property="customerId" />
+        <result property="carBookingTime" column="car_Booking_Time"/>
+    </resultMap>
+
+    <select id="getAllCarRentalHiring" resultMap="HiringsResultMap">
+        select * from Car_Rental_Hirings
+    </select>
+
+    <insert id="saveCarRentalHiring" useGeneratedKeys="true" keyProperty="carRentalHiringId" keyColumn="car_Rental_Hiring_Id" parameterType="com.telenorbank.assessment.entity.CarRentalHiring" statementType="PREPARED">
+        insert into Car_Rental_Hirings (car_Rental_Price_Per_Hour, car_Hiring_Type, car_Registration_Number, customer_Id, car_Booking_Time)
+        values(#{carRentalPricePerHour}, #{carHiringType} ,#{carRegistrationNumber} , #{customerId}, #{carBookingTime})
+    </insert>
+
+    <delete id="deleteCarRentalHiringByCarRentalHiringId">
+        delete from Car_Rental_Hirings where car_Rental_Hiring_Id =#{carRentalHiringId}
+    </delete>
+
+</mapper>

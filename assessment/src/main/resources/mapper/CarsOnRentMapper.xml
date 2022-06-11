@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.telenorbank.assessment.mapper.CarsOnRentMapper">
+
+
+    <resultMap id="BaseResultMap"  type="com.telenorbank.assessment.entity.CarsOnRent" >
+        <id column="car_Registration_Number" property="carRegistrationNumber"  />
+        <result column="car_Brand_Name" property="carBrandName"   />
+        <result column="car_Model_Name" property="carModelName"   />
+        <result column="car_Engine_Power_In_CC" property="carEnginePowerInCC"  />
+        <result column="car_Mileage_In_KMs" property="carMileageInKMs"  />
+        <result column="car_Hiring_Status" property="carHiringStatus"   />
+        <result column="customer_Id" property="customerId"   />
+
+        <association property="customer" javaType="com.telenorbank.assessment.entity.Customer">
+            <id column="customer_Id" property="customerId" />
+            <result column="customer_Name" property="customerName"  />
+            <result column="customer_Mobile_Number" property="customerMobileNumber"  />
+        </association>
+    </resultMap>
+
+
+    <select id="getAllCars" resultMap="BaseResultMap">
+        select * from cars_On_Rent
+    </select>
+
+    <select id="getAllCarsByCustomerId" resultMap="BaseResultMap">
+        select * from cars_On_Rent
+        where customer_Id = #{customerId}
+    </select>
+
+    <select id="getAllAvailableCars" resultMap="BaseResultMap">
+        select * from cars_On_Rent
+        where car_Hiring_Status = 'Available'
+    </select>
+
+    <insert id="saveCar" keyProperty="carRegistrationNumber" keyColumn="car_Registration_Number" parameterType="com.telenorbank.assessment.entity.CarsOnRent" statementType="PREPARED">
+        insert into cars_On_Rent (car_Registration_Number, car_Brand_Name, car_Model_Name, car_Engine_Power_In_CC, car_Mileage_In_KMs, car_Hiring_Status, customer_Id)
+        values(#{carRegistrationNumber}, #{carBrandName}, #{carModelName}, #{carEnginePowerInCC}, #{carMileageInKMs}, #{carHiringStatus}, #{customerId})
+    </insert>
+
+    <delete id="deleteCarByCarId">
+        delete from cars_On_Rent where carRegistrationNumber = #{carRegistrationNumber}
+    </delete>
+
+    <update id="updateCarStatus">
+        update cars_On_Rent set car_Hiring_Status =  #{carHiringStatus}
+        where car_Registration_Number = #{carRegistrationNumber}
+    </update>
+
+    <update id="updateCarCustomer">
+        update cars_On_Rent set customer_Id = #{customerId}
+        where car_Registration_Number = #{carRegistrationNumber}
+    </update>
+
+</mapper>

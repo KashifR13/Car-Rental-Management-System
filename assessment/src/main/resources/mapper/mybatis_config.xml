@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config  3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <mappers>
+        <mapper class="com.telenorbank.assessment.mapper.CarsOnRentMapper"/>
+        <mapper class="com.telenorbank.assessment.mapper.CarRentalHiringMapper"/>
+        <mapper class="com.telenorbank.assessment.mapper.CustomerMapper" />
+    </mappers>
+
+</configuration>
